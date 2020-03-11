@@ -1,12 +1,18 @@
 import React from 'react'
-    class Authorization {
-    
+export const AuthorizationProvider = React.Component {
+    state = {
     isLogged = false;
-    toLoginIn = () => this.isLogged = true
-    
+    toLoginIn = () => this.isLogged = true        
+    }
+    render () {
+        return (
+            <AuthorizationContext.Provider value={this.state}>
+                { this.props.children }
+            </AuthorizationContext.Provider>
+        )
+    }
     
 }
-    export default Authorization;
     export const AuthorizationContext = React.createContext(null);
     export const withAuthorization = (Component) => {
         class NewComponent extends Component {
