@@ -13,25 +13,29 @@ import {
 import Authorization from "./components/authorization.js";
 
 class App extends React.Component {
+
+  state = {
+    
+  }
  
 render(){
   return (
     <AuthorizationContext.Provider value={Authorization}>
-    <BrowserRouter> 
-        <Navigation />
-        <Switch>
-           
-            <Route path="/signin">
-                <SignIn toLoginIn={}/>
-            </Route>
-            <Route path="/signup">
-                <SignUp />
-            </Route>
-            <Route path="/">
-                <Home status={this.isLogged}/>
-            </Route>
-        </Switch>
-    </BrowserRouter>
+      <BrowserRouter> 
+          <Navigation />
+          <Switch>
+            
+              <Route path="/signin">
+                  <SignIn toLoginIn={}/>
+              </Route>
+              <Route path="/signup">
+                  <SignUp />
+              </Route>
+              <Route path="/">
+                  <Home status={this.isLogged}/>
+              </Route>
+          </Switch>
+      </BrowserRouter>
     </AuthorizationContext.Provider>
   )};
 }
