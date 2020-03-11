@@ -21,13 +21,7 @@ class App extends React.Component {
 render(){
   return (
     <AuthorizationContext.Provider value={Authorization}>
-      <BrowserRouter> 
-          <Navigation />
-          <Switch>
-            
-              <Route path="/signin">
-                  <SignIn toLoginIn={}/>
-              </Route>
+      <Browse
               <Route path="/signup">
                   <SignUp />
               </Route>
