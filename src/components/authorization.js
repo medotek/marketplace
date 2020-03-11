@@ -17,7 +17,7 @@ export const AuthorizationProvider = React.Component {
     export const withAuthorization = (Component) => {
         class NewComponent extends Component {
             render() {
-                return(
+              return(
                     <AuthorizationContext.Consumer>
                         {value => <Component {... value}{... this.props}/>} 
                     </AuthorizationContext.Consumer>
@@ -44,5 +44,5 @@ export const AuthorizationProvider = React.Component {
            )
        }
    }
-   const ToConnectWithAuthorization = withAuthorization(ToConnect);
+   export const ToConnectWithAuthorization = withAuthorization(ToConnect);
 
