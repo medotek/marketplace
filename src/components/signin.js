@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { withAuthorization } from './authorization.js'
+import { withAuthorization, AuthorizationProvider,ToConnectWithAuthorization, AmILoggedWithAuthorization } from './authorization.js';
+import {compose} from 'recompose';
 class SignIn extends React.Component {
 
         state = {email:"",
@@ -8,29 +9,37 @@ class SignIn extends React.Component {
     
     
     handleInput = (event) => {
-        console.log(event.target.name, event.target.value);
+
         this.setState({
             [event.target.name]:event.target.value
         })
     }
-    handleSubmit = () => {
-        this.props.toLoginIn();
+    handleSubmit = (event) => {
+        console.log("state signin", this.state,);
+        
+        event.preventDefault();
+        this.props.toLoginIn(this.state.email);
         this.props.history.push("/");
     }
     render() {
         return (
-            <div>
+            
+            <form>
+                <AmILoggedWithAuthorization/>
                 <h1>Sign In</h1>
                 <input
-                type="text" placeholder="Username" onChange={this.handleInput}
+                type="text" name="email" placeholder="Username" onChange={this.handleInput}
                 />
                 <input
                 type="password" placeholder="Password"
                 />
-                <button type="submit" onClick={this.handleSubmit}>Login</button>
-            </div>
+                <div onClick={this.handleSubmit}><ToConnectWithAuthorization /></div>
+            </form>
         )
     }
 }
 
-export default withRouter(withAuthorization(SignIn));
+export default compose(
+    withRouter,
+    withAuthorization
+)(SignIn);

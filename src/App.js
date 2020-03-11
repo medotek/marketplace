@@ -3,32 +3,34 @@ import Navigation from './components/navigation.js'
 import SignIn from './components/signin.js'
 import SignUp from './components/signup.js'
 import Home from './components/home.js'
-import {AuthorizationContext} from './components/authorization.js'
 
 import {
   BrowserRouter,
   Route,
   Switch
 } from "react-router-dom";
-import Authorization from "./components/authorization.js";
+import {AuthorizationProvider, withAuthorization} from "./components/authorization.js";
+
+const SignIn2 = withAuthorization(SignIn);
 
 class App extends React.Component {
 
-  state = {
-    
+  state = {  
   }
  
 render(){
   return (
-    <AuthorizationContext.Provider value={Authorization}>
+    <AuthorizationProvider >
       <BrowserRouter> 
           <Navigation />
+          
           <Switch>
             
               <Route path="/signin">
-                  <SignIn toLoginIn={}/>
+                  <SignIn/>
               </Route>
               <Route path="/signup">
+
                   <SignUp />
               </Route>
               <Route path="/">
@@ -36,7 +38,7 @@ render(){
               </Route>
           </Switch>
       </BrowserRouter>
-    </AuthorizationContext.Provider>
+    </AuthorizationProvider>
   )};
 }
 
