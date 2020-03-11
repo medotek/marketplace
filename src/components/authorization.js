@@ -1,9 +1,9 @@
 import React from 'react'
 export const AuthorizationProvider = React.Component {
     state = {
-    isLogged = false;
-    toLoginIn = () => this.isLogged = true        
-    }
+    isLogged: false,
+    toLoginIn: () => this.setState({isLogged:true})       
+    };
     render () {
         return (
             <AuthorizationContext.Provider value={this.state}>
@@ -19,7 +19,7 @@ export const AuthorizationProvider = React.Component {
             render() {
                 return(
                     <AuthorizationContext.Consumer>
-                        {value => <Component {... value}/>}
+                        {value => <Component {... value}{... this.props}/>} 
                     </AuthorizationContext.Consumer>
                 )
 
@@ -29,6 +29,20 @@ export const AuthorizationProvider = React.Component {
         }
         return NewComponent;
     }
-   
 
+    class AmILogged extends React.Component {
+        render () {
+            return (
+                <h1>{this.props.isLogged}</h1>
+            )
+        }
+    }
+   class ToConnect extends React.Component {
+       render () {
+           return (
+               <button onClick={this.props.toLoginIn}>Se Connecter</button>
+           )
+       }
+   }
+   const ToConnectWithAuthorization = withAuthorization(ToConnect);
 
