@@ -6,12 +6,11 @@ import { withFirebase } from '../firebase/firebase';
 class Article extends Component {
 
     clique = () => {
-        
-        if(this.props.isLogged) {
-            this.props.articlePanier(this.props.articles)
-        } else {
-            return alert("Vous devez être connecté.");
-        }
+       if(this.props.isLogged) {
+        this.props.articlePanier(this.props.articles)
+       } else {
+           return alert("Afin d'ajouter ce produit au panier, vous devez être connecté.");
+       }
     }
 
     render() {

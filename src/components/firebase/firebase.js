@@ -2,44 +2,53 @@ import app from 'firebase/app';
 import React from 'react';
 import firebase from 'firebase';
 import * as ROUTES from '../../constants/routes';
+import { withAuthentication } from '../session/session';
 const config = {
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    databaseURL: process.env.REACT_APP_DATABASE_URL,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+    apiKey: "AIzaSyDUpgb4LHfm6sR_jgOuz2R3fTuAtZEZIBM",
+    authDomain: "marketplace-1af40.firebaseapp.com",
+    databaseURL: "https://marketplace-1af40.firebaseio.com",
+    projectId: "marketplace-1af40",
+    storageBucket: "marketplace-1af40.appspot.com",
+    messagingSenderId: "299747805663",
+    appId: "1:299747805663:web:9f154a5ae329bfb77a5c6a"
   };
-  
+
   export const FirebaseContext = React.createContext(null);
 
   export class FirebaseProvider extends React.Component {
     constructor() {
       
-      app.initializeApp(config);
+      firebase.initializeApp(config);
       this.auth = firebase.default.auth();
       this.db = firebase.default.database();
       this.state = {
-        isLogged: false
+        isLogged: true, // pour montrer que ça marche si on est loggué
+        articles: 0,
+        
       };
      
     }
+   
     state = {
-      articles: 0,
+      isLogged: true,
+      articlePanier: (articles) => this.setState({articles: articles+1})
       // toLogout: () => this.setState({isLogged: false, articles: 0}),
       // toLoginIn: (email) => this.setState({isLogged:true, email : email}),
-      // articlePanier: (articles) => this.setState({articles: articles+1})
+      // 
       
     }
+    
     componentDidMount() {
         this.listener = firebase.onAuthUserListener(
           authUser => {
             if (!!authUser) {
               this.props.history.push(ROUTES.SIGN_IN);
+             
             }
           },
           () => this.props.history.push(ROUTES.SIGN_IN),
         );
+        
       }
     
     doCreateUserWithEmailAndPassword = (email, password) =>
@@ -81,5 +90,27 @@ export const AmILoggedWithAuthorization = withFirebase(AmILogged);
            )
        }
     }
-    export const ToConnectWithAuthorization = withFirebase(ToConnect);
+    export const ToConnectWithAuthorization = withAuthentication(ToConnect);
    
+    
+    class Firebase {
+      constructor() {
+        app.initializeApp(config);
+        this.auth = app.auth();
+        this.db = app.database();
+      }
+      
+      // *** Auth API ***
+      doCreateUserWithEmailAndPassword = (email, password) =>
+        this.auth.createUserWithEmailAndPassword(email, password);
+      doSignInWithEmailAndPassword = (email, password) =>
+        this.auth.signInWithEmailAndPassword(email, password);
+      doSignOut = () => this.auth.signOut();
+      doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
+      doPasswordUpdate = password =>
+        this.auth.currentUser.updatePassword(password);
+      // *** User API ***
+      user = uid => this.db.ref(`users/${uid}`);
+      users = () => this.db.ref('users');
+    }
+    export default Firebase;

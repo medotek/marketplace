@@ -4,12 +4,20 @@ import { compose } from 'recompose';
 import { SignUpLink } from './signup';
 import { withFirebase } from './firebase/firebase';
 import * as ROUTES from '../constants/routes';
+import Grid from '@material-ui/core/Grid';
 const SignInPage = () => (
+  <Grid 
+  container
+  direction="row"
+  justify="center"
+  alignItems="center"
+  >
   <div>
     <h1>SignIn</h1>
     <SignInForm />
     <SignUpLink />
   </div>
+  </Grid>
 );
 const INITIAL_STATE = {
   email: '',
@@ -41,26 +49,36 @@ class SignInFormBase extends Component {
     const { email, password, error } = this.state;
     const isInvalid = password === '' || email === '';
     return (
+     
       <form onSubmit={this.onSubmit}>
+        <Grid xs={12}>
         <input
+        className="input"
           name="email"
           value={email}
           onChange={this.onChange}
           type="text"
           placeholder="Email Address"
         />
+        </Grid>
+        <Grid xs={12}>
         <input
+        className="input"
           name="password"
           value={password}
           onChange={this.onChange}
           type="password"
           placeholder="Password"
         />
-        <button disabled={isInvalid} type="submit">
+        </Grid>
+        <Grid xs={12} className="center">
+        <button className="button" disabled={isInvalid} type="submit">
           Sign In
         </button>
+        </Grid>
         {error && <p>{error.message}</p>}
       </form>
+     
     );
   }
 }

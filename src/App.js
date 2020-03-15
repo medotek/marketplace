@@ -9,7 +9,7 @@ import {
   Route,
   Switch
 } from "react-router-dom";
-import { withAuthentication } from './components/authentification';
+import  withAuthentication  from './components/authentification';
 class App extends React.Component {
 
   constructor(props) {

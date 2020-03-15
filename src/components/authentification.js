@@ -7,9 +7,25 @@ const withAuthentication = Component => {
       super(props);
       this.state = {
         authUser: null,
-      };
+         };
     }
     
+    //AFFICHE UNE ERREUR, je crois que tout vient d'ici, je suis bloqué...
+    
+    
+    
+    // componentDidMount() {
+    //   this.listener = this.props.firebase.auth.onAuthStateChanged(
+    //     authUser => {
+    //       authUser
+    //         ? this.setState({ authUser })
+    //         : this.setState({ authUser: null });
+    //     },
+    //   );
+    // }
+    // componentWillUnmount() {
+    //   this.listener();
+    //}
     render() {
       return (
         <AuthUserContext.Provider value={this.state.authUser}>

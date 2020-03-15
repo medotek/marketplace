@@ -17,12 +17,18 @@ const INITIAL_STATE = {
   };
 
 const SignUpPage = () => (
+  <Grid 
+  container
+  direction="row"
+  justify="center"
+  alignItems="center"
+  >
   <div>
     <h1>SignUp</h1>
     <FirebaseContext.Consumer>
       {firebase => <SignUpForm firebase={firebase} />}
     </FirebaseContext.Consumer>
-  </div>
+  </div></Grid>
 );
 
 class SignUpFormBase extends Component {
@@ -61,37 +67,46 @@ class SignUpFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
+        <Grid xs={12}>
         <input
+          className="input"
           name="username"
           value={username}
           onChange={this.onChange}
           type="text"
           placeholder="Full Name"
-        />
+        /></Grid>
+        <Grid xs={12}>
         <input
+        className="input"
           name="email"
           value={email}
           onChange={this.onChange}
           type="text"
           placeholder="Email Address"
-        />
+        /></Grid>
+        <Grid xs={12}>
         <input
+        className="input"
           name="passwordOne"
           value={passwordOne}
           onChange={this.onChange}
           type="password"
           placeholder="Password"
-        />
+        /></Grid>
+        <Grid xs={12}>
         <input
+        className="input"
           name="passwordTwo"
           value={passwordTwo}
           onChange={this.onChange}
           type="password"
           placeholder="Confirm Password"
-        />
-        <button disabled={isInvalid} type="submit">
+        /></Grid>
+        <Grid xs={12} className="center">
+        <button  className="button" disabled={isInvalid} type="submit">
           Sign Up
-        </button>
+        </button></Grid>
         {error && <p>{error.message}</p>}
       </form>
     );
