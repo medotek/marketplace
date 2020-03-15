@@ -4,7 +4,6 @@ import { compose } from 'recompose';
 import { SignUpLink } from './signup';
 import { withFirebase } from './firebase/firebase';
 import * as ROUTES from '../constants/routes';
-import {withAuthorization} from './authorization'
 const SignInPage = () => (
   <div>
     <h1>SignIn</h1>

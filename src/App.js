@@ -4,15 +4,12 @@ import SignUpPage from './components/signup.js'
 import SignInPage from './components/signin.js'
 import Home from './components/home.js'
 import * as ROUTES from './constants/routes';
-import {withFirebase} from './components/firebase/firebase'
-import { AuthUserContext } from './components/session';
 import {
   BrowserRouter,
   Route,
   Switch
 } from "react-router-dom";
-
-
+import { withAuthentication } from './components/authentification';
 class App extends React.Component {
 
   constructor(props) {
@@ -21,39 +18,26 @@ class App extends React.Component {
       authUser: null,
     };
   }
-  componentDidMount() {
-    this.props.firebase.auth.onAuthStateChanged(authUser => {
-      authUser
-        ? this.setState({ authUser })
-        : this.setState({ authUser: null });
-    });
-  }
-  componentWillUnmount() {
-    this.listener();
-  }
+  
+  
 render(){
   return (
-    <AuthUserContext.Provider value={this.state.authUser}>
      <BrowserRouter> 
           <Navigation />
           
           <Switch>
+            <Route path={ROUTES.SIGN_IN} component={SignInPage} />
+            {/* <Route
+              path={ROUTES.PASSWORD_FORGET}
+              component={PasswordForgetPage}
+            /> */}
+            <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
             
-              <Route path={ROUTES.SIGN_IN}>
-                  <SignInPage/>
-              </Route>
-              <Route path={ROUTES.SIGN_UP}>
-
-                  <SignUpPage />
-              </Route>
-              <Route path="/">
-                  <Home />
-              </Route>
+            <Route path={ROUTES.HOME} component={Home} />
           </Switch>
       </BrowserRouter>
-      </AuthUserContext.Provider>
   )};
 
 }
 
-export default withFirebase(App);
+export default withAuthentication(App);
