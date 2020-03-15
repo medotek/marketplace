@@ -13,6 +13,9 @@ const config = {
     appId: "1:299747805663:web:9f154a5ae329bfb77a5c6a"
   };
 
+//Il semblerait que j'ai mal configuré firebase
+  const fire = firebase.initializeApp(config);
+ 
   export const FirebaseContext = React.createContext(null);
 
   export class FirebaseProvider extends React.Component {
@@ -22,7 +25,7 @@ const config = {
       this.auth = firebase.default.auth();
       this.db = firebase.default.database();
       this.state = {
-        isLogged: true, // pour montrer que ça marche si on est loggué
+        isLogged: false,
         articles: 0,
         
       };
@@ -31,25 +34,13 @@ const config = {
    
     state = {
       isLogged: true,
-      articlePanier: (articles) => this.setState({articles: articles+1})
+      articlePanier: (articles) => this.setState({articles: articles+1}) // Le panier est censé marché si on est loggué or je n'ai pas eu l'occasion de le tester avec firebase
       // toLogout: () => this.setState({isLogged: false, articles: 0}),
       // toLoginIn: (email) => this.setState({isLogged:true, email : email}),
       // 
       
     }
-    
-    componentDidMount() {
-        this.listener = firebase.onAuthUserListener(
-          authUser => {
-            if (!!authUser) {
-              this.props.history.push(ROUTES.SIGN_IN);
-             
-            }
-          },
-          () => this.props.history.push(ROUTES.SIGN_IN),
-        );
-        
-      }
+   
     
     doCreateUserWithEmailAndPassword = (email, password) =>
       this.auth.createUserWithEmailAndPassword(email, password);
@@ -114,3 +105,4 @@ export const AmILoggedWithAuthorization = withFirebase(AmILogged);
       users = () => this.db.ref('users');
     }
     export default Firebase;
+    export {fire};

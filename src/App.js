@@ -4,6 +4,7 @@ import SignUpPage from './components/signup.js'
 import SignInPage from './components/signin.js'
 import Home from './components/home.js'
 import * as ROUTES from './constants/routes';
+import {fire} from './components/firebase/firebase'
 import {
   BrowserRouter,
   Route,
@@ -17,9 +18,21 @@ class App extends React.Component {
     this.state = {
       authUser: null,
     };
+    this.authListener = this.authListener.bind(this);
   }
-  
-  
+  componentDidMount() {
+    this.authListener();
+    
+  }
+  authListener() {
+    fire.auth().onAuthStateChanged((authUser) => {
+      if (authUser) {
+        this.setState({ authUser });
+      } else {
+        this.setState({ authUser: null });
+      }
+    })
+  }
 render(){
   return (
      <BrowserRouter> 
