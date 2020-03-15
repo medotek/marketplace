@@ -4,13 +4,12 @@ import firebase from 'firebase';
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../session/session';
 const config = {
-    apiKey: "AIzaSyDUpgb4LHfm6sR_jgOuz2R3fTuAtZEZIBM",
-    authDomain: "marketplace-1af40.firebaseapp.com",
-    databaseURL: "https://marketplace-1af40.firebaseio.com",
-    projectId: "marketplace-1af40",
-    storageBucket: "marketplace-1af40.appspot.com",
-    messagingSenderId: "299747805663",
-    appId: "1:299747805663:web:9f154a5ae329bfb77a5c6a"
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    databaseURL: process.env.REACT_APP_DATABASE_URL,
+    projectId:process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKE,
+    messagingSenderId:process.env.REACT_APP_MESSAGING_SENDER_ID
   };
 
 //Il semblerait que j'ai mal configuré firebase
